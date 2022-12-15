@@ -20,14 +20,16 @@ function onListClick(event) {
     }
 const instance = basicLightbox.create(`
 		<img width="1140"  src="${event.target.dataset.source}">
-	`)
+	`, {
+  onShow: (instance) => { document.addEventListener("keydown", onCloseImgEscape) },
+  onClose: (instance) => { document.removeEventListener("keydown", onCloseImgEscape) }
+})
   instance.show();
-
-  list.addEventListener("keydown", onCloseImgEscape)
+  
   function onCloseImgEscape(evt) {
     console.log(evt.code)
     if (evt.code === "Escape") {
-      instance.close(() => list.removeEventListener("keydown", onCloseImgEscape))
+      instance.close(() => {})
     }
   }
 }
